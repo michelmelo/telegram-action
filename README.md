@@ -8,7 +8,7 @@
 
 ## Usage
 
-Send custom message and see the custom variable as blow.
+Send custom message and see the custom variable as below.
 
 ```yml
 name: telegram message
@@ -42,6 +42,7 @@ Remove `args` to send the default message.
 
 ## Input variables
 
+* socks5 - optional. support socks5 proxy URL
 * photo - optional. photo message
 * document - optional. document message
 * sticker - optional. sticker message
@@ -51,10 +52,12 @@ Remove `args` to send the default message.
 * venue - optional. venue message
 * video - optional. video message
 * debug - optional. enable debug mode
-* format - optional. `markdown` or `html`
+* format - optional. `markdown` or `html`. See [MarkdownV2 style](https://core.telegram.org/bots/api#markdownv2-style)
+* message - optional. custom message
 * message_file - optional. overwrite the default message template with the contents of the specified file.
+* disable_web_page_preview - optional. disables link previews for links in this message. default is `false`.
 
-### Example
+## Example
 
 send photo message:
 
@@ -95,12 +98,24 @@ send custom message:
       echo This event is a pull request that had an assignee removed.
 ```
 
+send message using custom proxy (support `http`, `https`, and `socks5`) like `socks5://127.0.0.1:1080` or `http://222.124.154.19:23500`
+
+```yml
+- name: send message using socks5 proxy URL
+  uses: appleboy/telegram-action@master
+  with:
+    to: ${{ secrets.TELEGRAM_TO }}
+    token: ${{ secrets.TELEGRAM_TOKEN }}
+    socks5: "http://222.124.154.19:23500"
+    message: Send message from socks5 proxy URL.
+```
+
 ## Secrets
 
 Getting started with [Telegram Bot API](https://core.telegram.org/bots/api).
 
-* `TELEGRAM_TOKEN`: Telegram authorization token.
-* `TELEGRAM_TO`: Unique identifier for this chat.
+* `token`: Telegram authorization token.
+* `to`: Unique identifier for this chat.
 
 How to get unique identifier from telegram api:
 
